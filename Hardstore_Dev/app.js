@@ -1,38 +1,40 @@
 const express = require('express');
 const app = express();
-const path = require('path')
+const path = require('path');
 
-app.use(express.static(path.resolve(__dirname, './public')))
+app.set("view engine", 'ejs');
+app.set("views",["./views","./views/admin"]);
+
+app.use(express.static(path.resolve(__dirname, './public')));
+
+app.use(express.urlencoded({ extended: false}));
+app.use(express.json());
+const methodOverride = require("method-override");
+app.use(methodOverride("_method"))
+
+let mainRoutes = require('./routes/main.js');
+let rutasProductos = require('./routes/products.js');
+let adminRoutes = require('./routes/admin.js');
 
 let PUERTO = 3000
-app.listen(process.env.PORT || PUERTO, () => console.log("server: ON  Port:", PUERTO))
+app.listen(process.env.PORT || PUERTO, () => console.log("server: ON  Port:", PUERTO));
 
-//HOME
-app.get('/', function(req, res){
-    res.sendFile(path.resolve(__dirname, "./views/index.html"))
-})
-
-//PRODUCT GALERY
-app.get('/products', function(req, res){
-    res.sendFile(path.resolve(__dirname, "./views/products_galery.html"))
-})
-
-//PRODUCT DETAIL
-app.get('/product-detail', function(req, res){
-    res.sendFile(path.resolve(__dirname, "./views/detail.html"))
-})
+//MAIN ROUTES (home-login-register)
+app.use('/', mainRoutes);
 
 //SHOPING CART
 app.get('/productCart', function(req, res){
-    res.sendFile(path.resolve(__dirname, "./views/productCart.html"))
+    res.render("productCart")
 })
 
-//LOGIN
-app.get('/login', function(req, res){
-    res.sendFile(path.resolve(__dirname, "./views/login.html"))
-})
+//PRODUCT DETAIL & PRODUCT GALERY
+app.use('/products', rutasProductos);
 
-//REGISTER
-app.get('/register', function(req, res){
-    res.sendFile(path.resolve(__dirname, "./views/register.html"))
+//ADMIN
+app.use('/admin', adminRoutes)
+
+
+//404
+app.use((req, res, next)=>{
+    res.status(404).render('notFound')
 })

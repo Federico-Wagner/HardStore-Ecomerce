@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Hardstore</title>
+    <link href="CSS/home.css" rel="stylesheet">
+    <%- include("./partials/head.ejs") %>
+</head>
+
+<body>
+    <header>
+        <%- include("./partials/header.ejs") %>
+    </header>
+
+    <main>
+        <div class="cell_phone">
+            <h3 class="seccion_title">¿Que estas buscando?</h3>
+            <div class="categories">
+                <a href="products"><img src="images/tecl_mouse.jfif"><p>Teclados y Mouses</p></a>
+                <a href=""><img src="images/monitores.jpg"><p>Monitores</p></a>
+                <a href=""><img src="images/auris.png"><p>Auriculares y Parlantes</p></a>
+                <a href=""><img class="img_juegos" src="images/games.png"><p>Juegos</p></a>
+                <a href=""><img src="images/silla.jpg"><p>Sillas Gamer</p></a>
+                <a href=""><p>Todos los productos</p></a>
+            </div>
+        </div>
+
+        <div class="desktop">
+            <p class="carrusel">
+                <img class="baner" src="images/baner_navidad.png" alt="Falta banner">
+            </p>
+
+            <form action="/products/galery" method="get">
+                <div class="search_bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" name="search" id="search">
+                    <button type="submit">Buscar</button>
+                </div>
+            </form>
+
+            <div class="nav">
+                <ul class="nav_bar" type="none">
+                    <li><a href="/products/galery/teclados">Teclados</a></li>
+                    <li><a href="/products/galery/mouses">Mouses</a></li>
+                    <li><a href="/products/galery/headsets">Headsets</a></li>
+                    <li><a href="/products/galery/monitores">Monitores</a></li>
+                </ul>
+
+                <ul class="nav_bar" type="none">
+                    <li><a href="/products/galery/parlantes">Parlantes</a></li>
+                    <li><a href="/products/galery/sillas">Sillas Gamer</a></li>
+                    <li><a href="/products/galery/juegoss">Juegos</a></li>
+                </ul>
+            </div>
+            <hr class="line">
+
+            <div class="categories">
+                <a href="products/galery/teclados_mouses"><img src="images/tecl_mouse.jfif"><p>Teclados y Mouses</p></a>
+                <a href="products/galery/monitores"><img src="images/monitores.jpg"><p>Monitores</p></a>
+                <a href="products/galery/headsets"><img src="images/auris.png"><p>Headsets</p></a>
+                <a href="products/galery/sillas"><img src="images/silla.jpg"><p>Sillas Gamer</p></a>
+            </div>
+            
+            <div class="destacados">
+                <h4>LO MAS VENDIDO</h4>
+                <hr class="line">
+                <div class="products">
+                    <% for (product of mostSold){ %>
+                        <a href="Products/product-detail?<%= product.prod_id %>">
+                            <img src=<%= product.prod_img %> >
+                            <p class="prod_name"><%= product.prod_name %></p>
+                            <div class="prices">
+                                <hr>
+                                <p class="price"><%= product.price %></p>
+                                <div class="price_down">
+                                    <p class="price_dto"><%= product.price_dto %></p>
+                                    <p class="dto"><%= product.dto %></p>
+                                </div>
+                            </div>
+                            <p class="envios">Envios a todo el pais</p>
+                        </a>
+                    <% } %>
+                </div>
+                <h4>NUESTRA SELECCION</h4>
+                <hr class="line">
+                <div class="products">
+                    <% for (product of ourSelection){ %>
+                        <a href="Products">
+                            <img src=<%= product.prod_img %> >
+                            <p class="prod_name"><%= product.prod_name %></p>
+                            <div class="prices">
+                                <hr>
+                                <p class="price"><%= product.price %></p>
+                                <div class="price_down">
+                                    <p class="price_dto"><%= product.price_dto %></p>
+                                    <p class="dto"><%= product.dto %></p>
+                                </div>
+                            </div>
+                            <p class="envios">Envios a todo el pais</p>
+                        </a>
+                    <% } %>
+                </div>
+                <h4>OFERTAS</h4>
+                <hr class="line">
+                    <div class="products">
+                        <% for (product of offers){ %>
+                            <a href="Products">
+                                <img src=<%= product.prod_img %> >
+                                <p class="prod_name"><%= product.prod_name %></p>
+                                <div class="prices">
+                                    <hr>
+                                    <p class="price"><%= product.price %></p>
+                                    <div class="price_down">
+                                        <p class="price_dto"><%= product.price_dto %></p>
+                                        <p class="dto"><%= product.dto %></p>
+                                    </div>
+                                </div>
+                                <p class="envios">Envios a todo el pais</p>
+                            </a>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <%- include("./partials/footer.ejs") %>
+    </footer>
+
+</body>
+</html>

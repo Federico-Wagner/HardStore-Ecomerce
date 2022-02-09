@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Hardstore</title>
+    <link href="/CSS/prod_gal.css" rel="stylesheet">
+    <link href="/CSS/footer.css" rel="stylesheet">
+    <link href="/CSS/header.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/190d2f0c87.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+</head>
+<body>    
+    <header>
+        <%- include("./partials/header.ejs") %>
+    </header>
+    <main>
+        <div class="filt-ord">
+            <p class="filtro-desplegable">Filtrar: <i class="fas fa-sort-down"></i></p>
+            <p class="ordenar-por">Ordenar por: <i class="fas fa-sort-down"></i></p>
+        </div>
+        <hr>
+        <div class="filt-prod">
+            <div class="filtro">
+                <p>Soy un filtro de productos</p>
+            </div>
+            <div class="productos">
+                <div class="producto">
+                    <% for (product of results){ %>
+                        <a href="/products/product-detail">
+                            <div class="img"><img src=<%= product.prod_img %> ></div>
+                            
+                            <div class="info">
+                                <h4 class="product_name"><%= product.prod_name %></h4>
+                                <div class="prices">
+                                    <p class="price"><%= product.price %></p>
+                                    <p class="price_dto"><%= product.price_dto %></p>
+                                    <p class="dto"><%= product.dto %></p>
+                                </div>
+                                <button><p>Agregar al carrito</p></button>
+                            </div>
+                        </a>
+                        <hr>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <%- include("./partials/footer.ejs") %>
+    </footer>
+</body>
+</html>
