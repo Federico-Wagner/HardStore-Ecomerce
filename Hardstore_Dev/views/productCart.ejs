@@ -11,23 +11,27 @@
     <link href="CSS/footer.css" rel="stylesheet">
 </head>
 <body>
-    <div class="grid-container">
-        <header>
+     <header>
             <%- include("./partials/header.ejs") %>
         </header>
+    <div class="grid-container">
         
         <div class="table-cart">
             <h2>MI CARRITO</h2>
             <div class="item">
                 <img src="images/monitores.jpg" alt="Monitor" class="product-image">
-                <p class="name"> Monitor gamer Curvo Led 34" </p>
-                <div class="quantity"> <div class="quantity-buttons">
-                    <input type="button" value="-" class="minus"><input type="tel" class="Qty-value" value="1"><input type="button" value="+" class="plus"></div>
-                </div>
-                <p class="price">$64,999</p>
-                <div class="delete">
-                    <button type="button"><i class="fas fa-times"></i></button>
-                </div>
+                <ul class="item-order">
+                    <li><p class="name"> Monitor gamer Curvo Led 34"</p></li>
+                   <li><div class="quantity"> <div class="quantity-buttons">
+                            <input type="button" value="-" class="minus"><input type="tel" class="Qty-value" value="1"><input type="button" value="+" class="plus"></div>
+                        </div>
+                    </li>
+                    <li><p class="price">$64,999</p></li>
+                    <li><div class="delete">
+                            <button type="button"><i class="fas fa-times"></i></button>
+                        </div>
+                    </li>
+                </ul>
             </div>
             <div class="item">
                 <img src="images/note.png" alt="notebook" class="product-image">
@@ -91,10 +95,10 @@
             </div>
         </div>
 
-        <footer class="footer">
-            <%- include("./partials/footer.ejs") %>
-        </footer>
-
+    
     </div>
+    <footer class="footer">
+            <%- include("./partials/footer.ejs") %>
+    </footer>
 </body>
 </html>

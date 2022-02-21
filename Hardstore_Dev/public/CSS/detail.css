@@ -90,27 +90,26 @@ hr {
 }
 
 div.general {
-    margin: 5%;
+    margin: 10%;
+    margin-top: 0;
 }
 
 .productos {
-    display: flex;
+    display: grid;
     width: 100%;
-    flex-wrap: nowrap;
+    grid-template-columns: 60% auto;
+    padding-bottom: 15px;
 }
 
 .productos img {
-    margin-top: 10px;
-    min-width: 50%;
+    max-width: 100%;
 }
 
 .productos .main-producto {
     display: flex;
-    align-items: flex-end;
     flex-direction: column;
-    justify-content: space-between;
-    padding: 10px;
-    width: 80%;
+    justify-content: space-around;
+    width: 100%;
 }
 
 .main-producto h3 {
@@ -126,29 +125,53 @@ div.general {
     color: rgb(115, 190, 1);
 }
 
+.cuotas-envios {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.precio-stock {
+    display: flex;
+    flex-direction: column;
+}
+
 .main-producto .envios {
     text-decoration: none;
     border-radius: 5px;
-    padding: 5px;
+    padding: 2px 2px;
     background-color: rgb(115, 190, 1);
     color: white;
+    width: 20%;
+}
+
+.main-producto .main-envios {
+    font-size: 15px;
+    text-align: center;
 }
 
 div .button {
-    display: flex;
-    justify-content: flex-end;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    justify-content: space-between;
+    align-items: center;
     width: 100%;
     padding: 15px;
 
 }
 
 /* ver btn .comprar */
+.ahora {
+    display: flex;
+    justify-content: flex-end;
+}
+
 .btn {
     border: 2px solid black;
     border-radius: 5px;
     background-color: white;
     color: black;
-    padding: 17px 35px;
+    padding: 17px 0;
     font-size: 24px;
     cursor: pointer;
 }
@@ -156,11 +179,29 @@ div .button {
 .comprar {
     border-color: rgb(115, 190, 1);
     color: green;
+    width: 80%;
 }
 
 .comprar:hover {
     background-color: rgb(115, 190, 1);
     color: white;
+}
+
+
+.main-ul {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    justify-content: space-around
+}
+
+.main-ul img {
+    max-height: 50px;
+    width: auto;
+    margin: 0 0 28px 16px;
+}
+
+.main-ul li {
+    list-style: none;
 }
 
 
@@ -195,6 +236,7 @@ div .button {
     width: 100%;
     padding: 10px;
 }
+
 /* ver box-shadow*/
 .general .interes img {
     box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.219);
@@ -208,13 +250,13 @@ div .button {
 
 }
 
+.general .interes-2 {
+    display: none;
+}
+
 @media (min-width: 500px) {
     .desktop {
         display: block;
-    }
-
-    .cell_phone {
-        display: none;
     }
 
     .structure {
@@ -223,14 +265,59 @@ div .button {
 
     }
 
+    .envios {
+        width: 100%;
+
+    }
+
 }
+
 
 @media (max-width: 500px) {
     .productos {
-        flex-wrap: wrap;
+        display: block;
+        width: 100%;
+        text-align: center;
     }
 
-    .main-producto {
-        text-align: center;
+    .envios {
+        display: none;
+    }
+
+    div .main-ul {
+        display: none;
+    }
+
+    div .button {
+        display: flex;
+        justify-content: space-evenly
+    }
+
+    .btn {
+        width: 150%;
+        padding: 17px 75px;
+    }
+
+    .general .interes {
+        display: none;
+    }
+
+    .general .interes-2 {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        padding: 10px;
+    }
+
+    .general .interes-2 img {
+        box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.219);
+        width: 75%;
+    }
+
+    .interes-2 i {
+        display: flex;
+        align-items: center;
+        font-size: 25px;
+
     }
 }

@@ -6,8 +6,7 @@ app.set("view engine", 'ejs');
 app.set("views",["./views","./views/admin"]);
 
 app.use(express.static(path.resolve(__dirname, './public')));
-
-app.use(express.urlencoded({ extended: false}));
+app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 const methodOverride = require("method-override");
 app.use(methodOverride("_method"))
@@ -15,6 +14,7 @@ app.use(methodOverride("_method"))
 let mainRoutes = require('./routes/main.js');
 let rutasProductos = require('./routes/products.js');
 let adminRoutes = require('./routes/admin.js');
+let cartRoutes = require('./routes/prodCart.js')
 
 let PUERTO = 3000
 app.listen(process.env.PORT || PUERTO, () => console.log("server: ON  Port:", PUERTO));
@@ -23,9 +23,7 @@ app.listen(process.env.PORT || PUERTO, () => console.log("server: ON  Port:", PU
 app.use('/', mainRoutes);
 
 //SHOPING CART
-app.get('/productCart', function(req, res){
-    res.render("productCart")
-})
+app.use('/', cartRoutes);
 
 //PRODUCT DETAIL & PRODUCT GALERY
 app.use('/products', rutasProductos);
