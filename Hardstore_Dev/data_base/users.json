@@ -2,41 +2,48 @@
     {
         "id": 1,
         "nombre": "maria",
-        "apellido":"ggsgfdjsgkds",
+        "apellido": "ggsgfdjsgkds",
         "email": "gaby0@marriott.com",
         "Contraseña": "iWeh3RqXTZ",
-        "Categoria": "53.61.80.78"
+        "celular": "1532134985"
     },
     {
         "id": 2,
         "nombre": "Genesis",
-        "apellido":"kflghkf",
+        "apellido": "kflghkf",
         "email": "tomato@simplemachines.org",
         "Contraseña": "pTqusw",
-        "Categoria": "83.206.38.17"
+        "celular": "1532134985"
     },
     {
         "id": 3,
         "nombre": "lucas",
         "email": "pwemd2@blogspot.com",
-        "apellido":"dkghklfhl",
+        "apellido": "dkghklfhl",
         "Contraseña": "RyS9FWpFf1u",
-        "Categoria": "148.75.176.113"
+        "celular": "1532134985"
     },
     {
         "id": 4,
         "nombre": "federico",
         "email": "ktatam3@oaic.gov.au",
-        "apellido":"ggjghjh",
+        "apellido": "ggjghjh",
         "Contraseña": "kg0yGl3bT",
-        "Categoria": "73.212.204.18" 
+        "celular": "1532134985"
     },
     {
         "id": 5,
         "nombre": "juan",
         "email": "wwecalinden4@ovh.net",
-        "apellido":"gjhfjhf",
+        "apellido": "gjhfjhf",
         "Contraseña": "rJ3sOkAe",
-        "Categoria": "456.238.99.215"
+        "celular": "1532134985"
+    },
+    {
+        "userName": "fede0104",
+        "email": "fede0104@gmail.com",
+        "password_1": "claveBancaria",
+        "password_2": "claveBancaria",
+        "id": 6
     }
 ]
