@@ -17,9 +17,38 @@ const controller = {
         res.render("register")
     },
     loginPost: function(req, res){
-        console.log(req.body);
-        console.log("post de login")
-        res.render("login")
+        let validation = validationResult(req) //array de errores
+        if (validation.errors.length > 0){
+            //form data error
+            res.render("login",{errors : validation.errors, old : req.body})
+        }
+        //load user DB
+        UsersdataBasePath = path.join(__dirname, '../data_base/users.json');
+        UsersdataBase = JSON.parse(fs.readFileSync(UsersdataBasePath))
+        //FIND user
+        let user = UsersdataBase.find(user => user.userName == req.body.userName )
+        if (user){
+            //registeres user => check password
+            let check = bcryptjs.compareSync(req.body.password, user.password)
+              if (check){
+                //login user
+                req.session.user = req.body.userName
+                //remember =>  GENERATE COOCKIE
+                if (req.body.remember){
+                    res.cookie('userName',req.session.user,{maxAge:60000})
+                }
+                res.redirect('/')
+            }
+        }
+        res.render('login', {error: "Usuario o contraseña invalida",old : req.body})
+    },
+    logout: function(req, res){
+        req.session.user = undefined
+        res.cookie('userName',req.session.user,)
+        res.redirect('/')
+    },
+    userCheck: function(req, res){
+        res.send(req.session.user)
     },
     registerPost: function(req, res){
         let validation = validationResult(req) //array de errores
@@ -27,20 +56,23 @@ const controller = {
             //registry error
             res.render("register",{errors : validation.errors, old : req.body})
         }else{
-            //no errors -> user register in DB
-            //read db
-            UsersdataBasePath = path.join(__dirname, '../data_base/users.json');
-            UsersdataBase = JSON.parse(fs.readFileSync(UsersdataBasePath))
+            //no errors -> chech passwords maching
+            if (req.body.password == req.body.password_repeat){   
+                //no errors -> user register in DB
+                //read db
+                UsersdataBasePath = path.join(__dirname, '../data_base/users.json');
+                UsersdataBase = JSON.parse(fs.readFileSync(UsersdataBasePath))
 
-            //chech passwords maching
-            if (req.body.password == req.body.password_repeat){                
                 //create new user
                 let new_user = {}
-
                 new_user["userName"] = req.body.userName
                 new_user["email"] = req.body.email
                 new_user["password"] = bcryptjs.hashSync(req.body.password, 10)
-                new_user["avatar"] = req.file.filename
+                if (req.file){
+                    new_user["avatar"] = req.file.filename
+                }else{
+                    new_user["avatar"] = "default.jpg"
+                }
                 new_user["name"] = ""
                 new_user["surname"] = ""
                 new_user["street"] = ""
@@ -57,6 +89,12 @@ const controller = {
                 res.render("register",{errors :[{ msg :"Las contraseñas ingresadas no coinciden"}], old : req.body})
             }
         }
+    },
+    profile: function(req, res){
+        res.render('profile')
+    },
+    profileEdit: function(req, res){
+        res.render('profileEdit')
     }
 }
 
