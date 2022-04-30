@@ -1,76 +1,118 @@
 const req = require('express/lib/request');
 const fs = require('fs');
 const path = require('path')
-const {agregarProducto, allDataBase, writeFile } = require('../services/adminServices')
+const sequelize = require('sequelize')
+const db = require('../database/models')
+const { User, Product, Cart, Product_category, Product_image } = db
+const { Op } = require("sequelize");
 
 
 const controller = {
-    login: function(req, res){
-        res.render("adminLogin")
-    },
-    controlPanel:function(req, res){
-        let results = allDataBase();
-        res.render("adminControlPanel", {results: results})
-    },
-    addProduct: function(req, res){
-        res.render("adminProdCreation")
-    },
-    manageProductEdit: function(req, res){
-        //obtengo la información
-        let products = allDataBase ()
-        let productFound = products.find (function(product){
-        return product.prod_id == req.params.id
-        })
-        console.log (productFound);
-        res.render ("adminProdModification", {product: productFound}); 
-        },
-    manageProductUpdate: function (req,res){
-        let products = allDataBase ();
-        let productFound = products.find (function (product){
-        return product.prod_id== req.params.id 
+    controlPanel: function (req, res) {
+        Product.findAll({ raw: true, include: [{ association: 'images', attributes: ['image_name'] }] },) // Find product- Para incluir imagen en su columna 'image_name'
+            .then((results) => {
+                res.render("adminControlPanel", { results: results })
             })
-            productFound.prod_name= req.body.prodName
-            productFound.prod_category=req.body.categoria 
-            productFound.most_sold = req.body.mostSold == "on" ? "true" : "false"
-            productFound.selection = req.body.selection == "on" ? "true" : "false"
-            productFound.offer = req.body.offer == "on" ? "true" : "false"
-            productFound.prod_img=req.file.filename
-            productFound.price=req.body.price
-            productFound.price_dto= req.body.price * (100- req.body.dto)/100
-            productFound.dto=req.body.dto
-            productFound.descripcion=req.body.description
-            writeFile (products);
-            res.redirect ('/products/'+ String (productFound.prod_id));
-        },
-    addProductPost: function(req, res){     
+    },
+    addProduct: function (req, res) {
+        Product_category.findAll({ raw: true }) // MIRAR solución de DataValues
+            .then((categories) => {
+                res.render("adminProdCreation", { categories})
+            })
+
+    },
+    addProductPost: function (req, res) {
         if (req.file != undefined) {
             //creo objeto del producto nuevo
-            newProduct = {
-                prod_name: req.body.prodName,
-                prod_category: req.body.categoria,
-                most_sold: req.body.mostSold || "false",
-                selection: req.body.selection || "false",
-                offer: req.body.offer || "false",
-                prod_img: req.file.filename,
+            Product.create({
+                product_name: req.body.prodName,
+                description: req.body.description,
+                brand: req.body.brand,
+                model: req.body.model,
+                color: req.body.color,
                 price: req.body.price,
-                price_dto: req.body.price * (100- req.body.dto)/100,
-                dto: req.body.dto
+                discount: req.body.dto,
+                category_id: req.body.category,
+                images: {
+                    image_name: req.file.filename
+                }
             },
-            prod_id = agregarProducto(newProduct)
-            res.redirect("/products/"+ String(prod_id));
-        }else{
-            res.render("adminProdCreation", {mesage: "La imagen no ha sido cargada correctamente"})
+                { include: [{ association: 'images' }] }
+            ).then(() => {
+                res.redirect("/admin/controlPanel"); // Mas adelante hacer vista de detalle de producto
+            })
+                .catch(err => {
+                    console.log(err)
+                })
+
+        } else {
+            Product_category.findAll({ raw: true })
+            .then((categories) => {
+                res.render("adminProdCreation", { categories,  mesage: "La imagen no ha sido cargada correctamente" })
+            })
         }
-    }, 
+    },
+    manageProductEdit: function (req, res) {
+        //obtengo la información
+        let product = Product.findByPk(req.params.id, {
+            raw: true,
+            include: [{ association: 'images' }]
+        });
+        let categories = Product_category.findAll();
+        let images = Product_image.findAll();
+        Promise.all([product, categories, images]).then(([oneProduct, allCategories, allImages]) => {
+            res.render("adminProdModification", { oneProduct, allCategories, allImages });
+        })
+    },
+    manageProductUpdate: function (req, res) {
+        Product.update({ 
+            product_name: req.body.prodName,
+            description: req.body.description,
+            brand: req.body.brand,
+            model: req.body.model,
+            color: req.body.color,
+            category_id: req.body.category,
+            price: req.body.price,
+            discount: req.body.dto
+        },
+            {
+                where: { product_id: req.params.id }
+            })
+            .then(() => {
+                if (req.file != undefined) { //Verifica si se cargó alguna imagen para actualizar en campo image_name
+                    Product_image.findOne(
+                        { where: { product_id: req.params.id } }
+                    )
+                        .then((images) => {
+                            images.update({
+                                image_name: req.file.filename
+                            })
+                        })
+                        .then(() => {
+                            res.redirect("/admin/controlPanel");
+                        })
+                } else {
+                    res.redirect("/admin/controlPanel");// Si imagen es undefined simplemente actualiza datos de producto y redirecciona
+                }
+            })
+    },
     delete: (req, res) => {
-		let products = allDataBase();
-		let productIndex = products.findIndex(function(product){
-			return product.prod_id == req.params.id
-		})
-		products.splice(productIndex, 1)
-		writeFile(products)
-		res.redirect('/admin/ControlPanel')
-	}
+        return Product_image.destroy({ // Elimino la imagen del producto en tabla product_image. 
+            where: {
+                product_id: req.params.id
+            }
+            })
+            .then(function(){
+                return Product.destroy({// elimino producto.
+                    where: {
+                        product_id: req.params.id
+                    }
+                })
+            })
+            .then(function(){
+                return res.redirect("/admin/controlPanel")
+            })
+    }
 }
 
 module.exports = controller

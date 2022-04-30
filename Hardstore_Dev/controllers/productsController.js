@@ -1,13 +1,15 @@
 const fs = require('fs');
 const path = require('path')
+const db = require ('../database/models');
 
-function refreshContent(){
-    //Base de Datos de productos
-    dataBasePath = path.join(__dirname, '../data_base/productos.json')
-    data_base = fs.readFileSync(dataBasePath)
-    data_base = JSON.parse(data_base)
-    return data_base
-}
+
+// function refreshContent(){
+//     //Base de Datos de productos
+//     dataBasePath = path.join(__dirname, '../data_base/productos.json')
+//     data_base = fs.readFileSync(dataBasePath)
+//     data_base = JSON.parse(data_base)
+//     return data_base
+// }
 const controller = {
     galery: function(req, res){
         // req.query.search     es el input del usuario al buscar un producto (GET)
@@ -29,21 +31,14 @@ const controller = {
         })
     },
     detail: function(req, res){
-        //sumando pruductos que tambien compraron
-        let random = function(productos){
-            let resultado = [];
-                for(let i = 1; i <= 3; i++ ){
-                let aleatorio = productos[Math.floor(Math.random() * productos.length)]
-                resultado.push(aleatorio)
-            }
-            return resultado
-            }
-        let showRandom = random(data_base);
-        refreshContent()
-        let producto = data_base.find(function(producto){
-            return  producto.prod_id == req.params.id
+        db.Product.findByPk(req.params.id,{
+            raw: true,
+            include: [{ association: 'images', attributes: ['image_name'] }]
         })
-        res.render('detail', {'producto': producto,  showRandom: showRandom});
+        .then(product =>{
+            res.render('detail', {product:product})
+           })
+           
         }
     }
 module.exports = controller

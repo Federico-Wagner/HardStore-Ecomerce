@@ -4,6 +4,7 @@
 }
 h2{
     margin-bottom: 15px;
+    text-align: center;
 }
 main{
     margin: 15px;
@@ -34,11 +35,15 @@ main .navbar a{
 .datos{
     margin-left: 20px;
     background-color: rgba(245, 245, 245, 0.712);
-    padding: 2.5rem;
+    padding: 10px 20px 15px 20px;
     width: 320px;
     border-radius: 15px;
 }
-img{
+.datos i{
+    color: gray;
+    font-size: 30px;
+}
+main img{
     border-radius: 50%;
     height: 150px;
     width: 150px;
@@ -46,4 +51,17 @@ img{
 main p{
     margin-top: 0.2rem;
     margin-bottom: 0.7rem;
+}
+.edit_Button{
+    display: flex;
+    justify-content: right;
+}
+main p{
+    border: rgba(218, 218, 218, 0.712) solid 1px;
+    padding: 10px;
+    width: 100%;
+    font-size: medium;
+}
+h4{
+    margin: 7px 0px 3px 0px;
 }
