@@ -1,9 +1,10 @@
-const sequelize = require('sequelize')
+const sequelize = require('sequelize');
+const Product = require('./Product');
 
 module.exports = (sequelize, DataTypes) => {
     let alias = 'Cart'; // esto debería estar en singular
     let cols = {
-        cart_product_id: {
+        id: {
             type: DataTypes.BIGINT(10).UNSIGNED,
             primaryKey: true,
             allowNull: false,
@@ -20,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
         tableName: 'cart_product'
     }
     const Cart = sequelize.define(alias,cols,config);
-
+    
     Cart.associate = function(models){
         Cart.belongsTo(models.User, {
             as: "user",
@@ -28,9 +29,9 @@ module.exports = (sequelize, DataTypes) => {
         })
         Cart.hasMany(models.Product,{
             as: "product",
-            foreignKey: "id"  // product_id
-        })
+            foreignKey: "id", //OJO
+        }
+        )
     }
-
     return Cart
 }
