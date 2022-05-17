@@ -5,7 +5,7 @@
   text-align: center;
 }
 main{
-  width: 350px;
+  width: 380px;
   border: black solid 1px;
   display: flex;
   flex-direction: column;
@@ -43,7 +43,6 @@ main form{
   margin-top: 15px;
 }
 main input{
-
   width: 80%;
   height: 35px;
   margin: 8px;
@@ -73,10 +72,6 @@ main .icons{
   font-size: 40px;
   margin-top: 10px;
 }
-main .icons .iconify-inline{
-  height: 28px;
-  padding-bottom: 10px;
-}
 main a{
   display: block;
   text-align: center;
@@ -84,22 +79,22 @@ main a{
   padding-bottom: 5px;
 }
 .errores {
+  margin-top: 10px;
+  padding-top: 10px;
   color: red;
-  font-size: 15px;
+  font-size: 14px;
   margin-bottom: 10px;
   margin: auto;
-  text-decoration: none;
-  width: 80%;
+  text-align: left;
+  width: 90%;
+  padding-left: 30px;
 }
-.errores ul{
-  list-style-type: none;
+.errores ul li, .errores p{
+  text-align: left;
 }
-
-
 .validInput{
   background-color: rgba(184, 236, 106, 0.8);
 }
-
 .nonValidInput{
   background-color: rgba(247, 166, 166, 0.8);
 }

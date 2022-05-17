@@ -4,7 +4,7 @@
   font-family: 'Roboto', sans-serif;
 }
 main{
-  width: 300px;
+  width: 380px;
   border: black solid 1px;
   display: flex;
   flex-direction: column;
@@ -19,6 +19,7 @@ main header.login{
   margin-top: 5px;
   text-align: center;
   padding-bottom: 15px;
+  border-radius: 5px;
 }
 main h2{
   margin: 10px 0px;
@@ -42,9 +43,11 @@ main form{
   margin-top: 15px;
 }
 main input{
-  margin: 5px;
+  width: 80%;
+  height: 35px;
+  margin: 8px;
   text-align: center;
-  font-size: 15px;
+  font-size: 16px;
 }
 main button{
   margin: 15px;
@@ -69,10 +72,6 @@ main .icons{
   font-size: 40px;
   margin-top: 10px;
 }
-main .icons .iconify-inline{
-  height: 28px;
-  padding-bottom: 10px;
-}
 main a{
   display: block;
   text-align: center;
@@ -81,4 +80,29 @@ main a{
 }
 .error{
   color: red;
+}
+.rememberCheck{
+  height: 20px;
+  width: 20px;
+}
+.errores {
+  margin-top: 10px;
+  padding-top: 10px;
+  color: red;
+  font-size: 14px;
+  margin-bottom: 10px;
+  margin: auto;
+  text-align: left;
+  width: 90%;
+  padding-left: 30px;
+}
+.errores ul li, .errores p{
+  text-align: left;
+}
+
+.validInput{
+  background-color: rgba(184, 236, 106, 0.8);
+}
+.nonValidInput{
+  background-color: rgba(247, 166, 166, 0.8);
 }
