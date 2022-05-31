@@ -66,6 +66,24 @@ const controller ={
             };
             res.sendFile(user.avatar, options)
         })
+    },
+    lastUser: (req, res)=>{
+        User.findAll({
+            raw: true,
+            order: [['id', 'DESC']],
+            limit: 1
+        })
+            .then(users=>{
+                users[0].avatar = `http://localhost:3000/images/users/${users[0].avatar}`
+                let response = {
+                    meta: {
+                        status : 200,
+                        url: `api/user/lastUser`
+                    },
+                    data: users[0]
+                }
+                res.json(response);
+            })
     }
 }
 

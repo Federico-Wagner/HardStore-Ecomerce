@@ -1,7 +1,7 @@
 const { validationResult } = require('express-validator')
 const bcryptjs = require('bcryptjs')
 const {User} = require('../database/models')
-const logInUser = require('../services/userServices.js')
+const {logInUser, addLocalProductsToCart} = require('../services/userServices.js')
 
 
 const controller = {
@@ -17,6 +17,7 @@ const controller = {
             res.render("login",{errors : validation.errors, old : req.body})
         }else{
             logInUser(req.body.userName, req.body.remember, req, res)
+            //addLocalProductsToCart(req, res, req.session.userID)
         }
     },
     logout: function(req, res){
@@ -38,12 +39,12 @@ const controller = {
             User.create(new_userSQL)
                 .then((newUser)=>{
                     console.log(newUser.dataValues)
-                    logInUser(newUser.dataValues.username, true, req, res)                 //user log after registration
+                    logInUser(newUser.dataValues.username, true, req, res)  //user log after registration
                 })
         }
     },
     profile: function(req, res){
-        if(req.params.id  == req.session.userID){       //access restiction
+        if(req.params.id  == req.session.userID){   //access restiction
             User.findOne({
                 where: {
                     id : req.session.userID
