@@ -32,6 +32,15 @@ header{
     grid-template-areas: cart;
     width: 100%;
 }
+.row .img{
+    width: 130px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+.row .img .medida{
+    max-height: 110px;
+    max-width: 140px;
+}
 .pago{
     background-color: #ffffff;
     display: flex;
@@ -60,10 +69,10 @@ header{
 }
 .btn-apply-coupon{
     background-color: #ffffff;
-    color: rgb(115, 190, 1);
+    color: #2be299;
     font-size: 19px;
     font-weight: 700;
-    border: solid 0.5px rgb(115, 190, 1);
+    border: solid 0.5px #2be299;
     border-radius: 5px;
     box-shadow: 0.5px 0.5px rgba(7, 7, 12, 0.5) ;
     padding: 0.5rem 1rem;
@@ -110,7 +119,7 @@ dl {
     text-align: right;
   }
 .btn-buy{
-    background:rgb(115, 190, 1);
+    background:#2be299;
     box-shadow: 0 2px 2px rgb(17, 17, 34);
     color:#ffffff;
     font-size: 24px;
@@ -120,6 +129,9 @@ dl {
     width: 82%;
     align-self: center;
     border-radius: 5px;
+}
+.btn-buy:hover{
+    background:#35fead;
 }
 .add-product{
     grid-template-areas: add-product;
@@ -221,7 +233,7 @@ dl {
 }
 .add-item .btn{
     width: 160px;
-    background: rgb(115, 190, 1);
+    background: #2be299;
     color:#ffffff;
     font-size: 18px;
     border: none;
@@ -231,7 +243,6 @@ dl {
 }
 footer{
     grid-template-areas: footer;
-    background-color: #c4c2c2;
 }
 @media (min-width: 992px){
     .grid-container{
@@ -250,6 +261,7 @@ footer{
         max-width: 12rem;
         padding-top: 10px;
         font-weight: 500;
+        margin-left: 25px;
     }
     .item .quantity .quantity-buttons{
         transform: translateY(26px);
@@ -276,10 +288,11 @@ footer{
         font-weight: 550;
     }
     .item .delete button[type="button"]{
-        font-size: 14px;
+        font-size: 24px;
     }
     .item .delete .fas{
         color: rgba(196, 28, 42, 0.774)
+
     }
     .pago{
     justify-content: flex-start;
